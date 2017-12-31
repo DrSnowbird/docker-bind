@@ -1,6 +1,6 @@
-[![Circle CI](https://circleci.com/gh/sameersbn/docker-bind.svg?style=shield)](https://circleci.com/gh/sameersbn/docker-bind) [![Docker Repository on Quay.io](https://quay.io/repository/sameersbn/bind/status "Docker Repository on Quay.io")](https://quay.io/repository/sameersbn/bind)
+[![Circle CI](https://circleci.com/gh/openkbs/docker-bind.svg?style=shield)](https://circleci.com/gh/openkbs/docker-bind) [![Docker Repository on Quay.io](https://quay.io/repository/openkbs/bind/status "Docker Repository on Quay.io")](https://quay.io/repository/openkbs/bind)
 
-# sameersbn/bind:9.9.5-20170626
+# openkbs/bind:9.9.5-20170626
 
 - [Introduction](#introduction)
   - [Contributing](#contributing)
@@ -44,18 +44,18 @@ If the above recommendations do not help then [report your issue](../../issues/n
 
 ## Installation
 
-Automated builds of the image are available on [Dockerhub](https://hub.docker.com/r/sameersbn/bind) and is the recommended method of installation.
+Automated builds of the image are available on [Dockerhub](https://hub.docker.com/r/openkbs/bind) and is the recommended method of installation.
 
-> **Note**: Builds are also available on [Quay.io](https://quay.io/repository/sameersbn/bind)
+> **Note**: Builds are also available on [Quay.io](https://quay.io/repository/openkbs/bind)
 
 ```bash
-docker pull sameersbn/bind:9.9.5-20170626
+docker pull openkbs/bind:9.9.5-20170626
 ```
 
 Alternatively you can build the image yourself.
 
 ```bash
-docker build -t sameersbn/bind github.com/sameersbn/docker-bind
+docker build -t openkbs/bind github.com/openkbs/docker-bind
 ```
 
 ## Quickstart
@@ -66,7 +66,7 @@ Start BIND using:
 docker run --name bind -d --restart=always \
   --publish 53:53/tcp --publish 53:53/udp --publish 10000:10000/tcp \
   --volume /srv/docker/bind:/data \
-  sameersbn/bind:9.9.5-20170626
+  openkbs/bind:9.9.5-20170626
 ```
 
 *Alternatively, you can use the sample [docker-compose.yml](docker-compose.yml) file to start the container using [Docker Compose](https://docs.docker.com/compose/)*
@@ -85,7 +85,7 @@ You can customize the launch command of BIND server by specifying arguments to `
 docker run --name bind -it --rm \
   --publish 53:53/tcp --publish 53:53/udp --publish 10000:10000/tcp \
   --volume /srv/docker/bind:/data \
-  sameersbn/bind:9.9.5-20170626 -h
+  openkbs/bind:9.9.5-20170626 -h
 ```
 
 ## Persistence
@@ -110,7 +110,7 @@ To upgrade to newer releases:
   1. Download the updated Docker image:
 
   ```bash
-  docker pull sameersbn/bind:9.9.5-20170626
+  docker pull openkbs/bind:9.9.5-20170626
   ```
 
   2. Stop the currently running image:
@@ -130,7 +130,7 @@ To upgrade to newer releases:
   ```bash
   docker run -name bind -d \
     [OPTIONS] \
-    sameersbn/bind:9.9.5-20170626
+    openkbs/bind:9.9.5-20170626
   ```
 
 ## Shell Access

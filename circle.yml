@@ -2,7 +2,7 @@ machine:
   services:
     - docker
   environment:
-    DOCKER_PROJECT: sameersbn
+    DOCKER_PROJECT: openkbs
     IMAGE_NAME: bind
 
 dependencies:

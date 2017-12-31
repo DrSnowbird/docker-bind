@@ -7,7 +7,7 @@ metadata:
 spec:
   containers:
     - name: bind
-      image: sameersbn/bind
+      image: openkbs/bind
       env:
         - name: WEBMIN_ENABLED
           value: false

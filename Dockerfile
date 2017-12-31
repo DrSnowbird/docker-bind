@@ -1,5 +1,6 @@
-FROM sameersbn/ubuntu:14.04.20170608
-MAINTAINER sameer@damagehead.com
+FROM openkbs/jdk-mvn-py3
+
+MAINTAINER DrSnowbird "DrSnowbird@openkbs.org"
 
 ENV BIND_USER=bind \
     BIND_VERSION=1:9.9.5 \
@@ -10,7 +11,7 @@ RUN rm -rf /etc/apt/apt.conf.d/docker-gzip-indexes \
  && wget http://www.webmin.com/jcameron-key.asc -qO - | apt-key add - \
  && echo "deb http://download.webmin.com/download/repository sarge contrib" >> /etc/apt/sources.list \
  && apt-get update \
- && DEBIAN_FRONTEND=noninteractive apt-get install -y bind9=${BIND_VERSION}* bind9-host=${BIND_VERSION}* webmin=${WEBMIN_VERSION}* dnsutils \
+ && apt-get install -y bind9 bind9-host webmin dnsutils \
  && rm -rf /var/lib/apt/lists/*
 
 COPY entrypoint.sh /sbin/entrypoint.sh
