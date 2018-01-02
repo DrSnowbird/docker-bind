@@ -72,12 +72,18 @@ function generateVolumeMapping() {
     fi
     for vol in $VOLUMES_LIST; do
         #echo "$vol"
-        if [[ $vol == "/"* ]]; then
-            # -- non-default /home/developer path; then use the full absolute path --
-            VOLUME_MAP="${VOLUME_MAP} -v ${LOCAL_VOLUME_DIR}$vol:$vol"
+	    hasColon=`echo $vol|grep ":"`
+        if [ ! "$hasColon" == "" ]; then
+            # asymetric mapping paths, like "/srv/docker/bind:/data"
+            VOLUME_MAP="${VOLUME_MAP} -v $vol" 
         else
-            # -- default sub-directory (without prefix absolute path) --
-            VOLUME_MAP="${VOLUME_MAP} -v ${LOCAL_VOLUME_DIR}/$vol:${DOCKER_VOLUME_DIR}/$vol"
+            if [[ $vol == "/"* ]]; then
+                echo "-- non-default /home/developer path; then use the full absolute path --"
+                VOLUME_MAP="${VOLUME_MAP} -v ${LOCAL_VOLUME_DIR}$vol:$vol"
+            else
+                echo "-- default sub-directory (without prefix absolute path) --"
+                VOLUME_MAP="${VOLUME_MAP} -v ${LOCAL_VOLUME_DIR}/$vol:${DOCKER_VOLUME_DIR}/$vol"
+            fi
         fi
         mkdir -p ${LOCAL_VOLUME_DIR}/$vol
         ls -al ${LOCAL_VOLUME_DIR}/$vol
@@ -123,14 +129,23 @@ echo ${PORT_MAP}
 #instanceName=`echo $(basename ${imageTag})|tr '[:upper:]' '[:lower:]'|tr "/\-: " "_"`
 instanceName=`echo $(basename ${imageTag})|tr '[:upper:]' '[:lower:]'|tr "/: " "_"`
 
+#    -e DISPLAY=$DISPLAY \
+#    -v /tmp/.X11-unix:/tmp/.X11-unix \
+
+sudo mkdir -p /srv/docker/bind
+sudo chcon -Rt svirt_sandbox_file_t /srv/docker/bind
+DOCKER_DNS=192.168.0.1
+#DOCKER_DNS=127.0.0.1
+
+WEBMIN_PASSWORD="password"
 echo "---------------------------------------------"
 echo "---- Starting a Container for ${imageTag}"
 echo "---------------------------------------------"
 echo ${DISPLAY}
-docker run -it --rm \
+docker run -d \
     --name=${instanceName} \
-    -e DISPLAY=$DISPLAY \
-    -v /tmp/.X11-unix:/tmp/.X11-unix \
+    --dns=${DOCKER_DNS} \
+    --env="ROOT_PASSWORD=${WEBMIN_PASSWORD}" \
     ${VOLUME_MAP} \
     ${PORT_MAP} \
     ${imageTag}
