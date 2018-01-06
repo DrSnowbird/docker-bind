@@ -72,7 +72,7 @@ function generateVolumeMapping() {
     fi
     for vol in $VOLUMES_LIST; do
         #echo "$vol"
-	    hasColon=`echo $vol|grep ":"`
+	hasColon=`echo $vol|grep ":"`
         if [ ! "$hasColon" == "" ]; then
             # asymetric mapping paths, like "/srv/docker/bind:/data"
             VOLUME_MAP="${VOLUME_MAP} -v $vol" 
